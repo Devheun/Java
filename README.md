@@ -83,5 +83,52 @@ Desk chair;
 위에서 살펴본 int,long,double,float,boolean,char 자료형은 원시(primitive) 자료형이라 부른다.
 (원시 자료형은 new 키워드로 값 생성 불가)
 
+##  Day 3
+---
+자료형
+---
+#### StringBuffer : 문자열을 추가하거나 변경 할 때 사용하는 자료형 (StringBuilder 자료형은 똑같이 쓰되 동기화 고려할 필요 없을때)
 
+메서드
+> append : 문자열을 추가하는 메서드
 
+ex)
+
+```
+StringBuffer sb = new StringBuffer();
+sb.append("hello");
+sb.append(" ");
+sb.append("jump to java");
+String result=sb.toString();
+System.out.println(result); //"hello jump to java" 출력됨
+```
+위와 동일한 출력값 내는 코드
+
+```
+String result="";
+result+="hello";
+result+=" ";
+result+="jump to java";
+System.out.println(result); // "hello jump to java" 출력됨
+```
+
+차이점 : 첫번째는 StringBuffer 객체가 한번만 생성되는 반면, 두번째는 String 자료형에 + 연산 있을때마다 객체 생성돼 총 4개
+
+String 자료형은 immutable, StringBuffer는 mutable
+
+*Tip* : StringBuffer 자료형은 String 자료형보다 무거운 편이므로, 문자열 추가나 변경이 많으면 StringBuffer, 거의 없으면 String
+
+> insert : 특정 위치에 원하는 문자열 삽입 가능
+```
+StringBuffer sb = new StringBuffer();
+sb.append("jump to java");
+sb.insert(0,"hello");
+System.out.println(sb.toString()); // "hello jump to java" 출력됨
+```
+
+> substring : String의 substring 메서드와 동일
+```
+StringBuffer sb = new StringBuffer();
+sb.append("Hello jump to java");
+System.out.println(sb.substring(0,4)); // "Hell" 출력됨
+```
