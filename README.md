@@ -132,3 +132,87 @@ StringBuffer sb = new StringBuffer();
 sb.append("Hello jump to java");
 System.out.println(sb.substring(0,4)); // "Hell" 출력됨
 ```
+
+#### 배열 (Array) : 자료형의 집합
+
+```
+int[] odds={1,3,5,7,9};
+String[] weeks={"월","화","수","목","금","토","일"};
+```
+
+배열의 길이는 고정, 배열 값 접근은 인덱싱
+
+#### 리스트 (List) : 배열과 비슷하지만 크기가 정해져있지 않고 동적으로 변함
+
+> ArrayList : 파이썬의 리스트와 비슷한듯?
+
+```
+import java.util.ArrayList;
+
+public class Sample{
+ public static void main(String[] args){
+  ArrayList pitches = new ArrayList();
+  pitches.add("138");
+  ptiches.add("129");
+  pitches.add("142");
+  System.out.println(pitches.get(1)): // 129 출력됨
+  System.out.println(pitches.size()); // 3 출력됨
+  System.out.println(pitches.contains("142")); //true 출력됨
+  System.out.println(pitches.remove("129")); // true 출력됨, 리스트에서 객체에 해당되는 항목 삭제하고 결과 리턴
+  System.out.println(pitches.remove(0)); // 138 출력됨, 해당 인덱스의 항목 삭제하고 삭제된 항목 리턴
+ }
+}
+```
+
+*Tip* : **제네릭스**
+
+```
+ArrayList<String> pitches = new ArrayList<>(); // "ArrayList 안에 담을 수 있는 자료형은 String 타입 뿐"
+```
+
+
+```
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Samble{
+ public static void main(String[] args){
+  String[] data={"138","129","142"};
+  ArrayList<String> pitches = new ArrayList<>(Arrays.asList(data));
+  System.out.println(pitches); // [138,129,142] 출력됨
+ }
+}
+```
+
+다른 예시 : "138", "129","142" 로 이루어진 ArrayList 콤마로 구분하여 하나의 문자열로 만들기 (String.join 이용)
+
+```
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Sample{
+ public static void main(String[] args){
+  ArrayList<String> pitches = new ArrayList<>(Arrays.asList("138","129","142"));
+  String result = String.join(",",pitches);
+  System.out.println(result); // 138, 129, 142 출력
+ }
+}
+```
+
+** 리스트 정렬하기 **
+
+```
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Sample{
+ public static void main(String[] args){
+  ArrayList<String> pitches = new ArrayList<>(Arrays.asList("138","129","142"));
+  pitches.sort(Comparator.naturalOrder()); // 오름차순으로 정렬, 내림차순은 reverseOrder
+  System.out.println(pitches); // [129,138,142] 출력
+ }
+}
+
+```
+
