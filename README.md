@@ -332,4 +332,21 @@ public class Main {
 
 **Tip** : TreeSet은 오름차순으로 값을 정렬하여 저장, LinkedHashSet은 입력한 순서대로 값을 정렬하여 저장
 
+#### 상수집합 (Enum) : 서로 관련이 있는 여러 개의 상수 집합 정의할 때 사용, 장점-잘못된 값으로 인한 위험성 X, 매직넘버 사용할 때보다 코드 명확해짐
 
+> Enum 만들기
+
+```
+public class Sample {
+    enum CoffeeType {
+        AMERICANO,
+        ICE_AMERICANO,
+        CAFE_LATTE
+    };
+    public static void main(String[] args) {
+        for(CoffeeType type:CoffeeType.values()){ // CoffeeType.values()는 CoffeeType의 배열 리턴
+         System.out.println(type); // AMERICANO,ICE_AMERICANO,CAFE_LATTE 출력됨
+        }
+    }
+}
+```
