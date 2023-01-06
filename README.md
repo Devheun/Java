@@ -216,3 +216,120 @@ public class Sample{
 
 ```
 
+##  Day 4
+
+---
+자료형
+---
+
+#### 맵 (Map) : Key와 Value를 한 쌍으로 갖는 자료형
+
+> HashMap
+>> put : HashMap에 key와 value를 추가하는 메서드
+```
+import java.util.HashMap;
+public class Main {
+    public static void main(String[] args) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("people","사람");
+        map.put("baseball","야구");
+    }
+}
+```
+
+>> get : key에 해당하는 value 값 얻을 때 사용하는 메서드
+
+```
+System.out.println(map.get("people")); // "사람" 출력됨
+```
+
+>> containsKey : 맵에 키가 있는지 조사하여 그 유무를 참, 거짓으로 리턴
+
+```
+System.out.println(map.containsKey("people")); // true 출력됨
+```
+
+>> remove : 맵의 항목을 삭제하는 메서드
+
+```
+System.out.println(map.remove("people")); // "사람" 출력됨, 삭제도 됨
+```
+
+>> size: 맵의 개수 리턴
+```
+System.out.println(map.size()); // 1 출력됨
+```
+
+>> keySet : 맵의 모든 Key를 모아서 리턴 ( Set 자료형으로 리턴)
+
+**Tip** : LinkedHashMap은 입력된 순서대로 데이터를 저장, TreeMap은 입력된 key의 오름차순 순서로 데이터 저장
+
+#### 집합 (Set) : 중복 X, 순서 X
+
+> 집합 자료형 만들기
+
+```
+import java.util.Arrays;
+import java.util.HashSet;
+public class Main {
+    public static void main(String[] args) {
+        HashSet<String> set=new HashSet<>(Arrays.asList("H","e","l","l","o"));
+        System.out.println(set); // [e,H,l,o] 출력
+    }
+}
+```
+
+> 교집합 구하기
+
+```
+import java.util.Arrays;
+import java.util.HashSet;
+public class Main {
+    public static void main(String[] args) {
+        HashSet<Integer> s1=new HashSet<>(Arrays.asList(1,2,3,4,5,6));
+        HashSet<Integer> s2=new HashSet<>(Arrays.asList(4,5,6,7,8,9));
+        HashSet<Integer> intersection=new HashSet<>(s1);
+        intersection.retainAll(s2); // 교집합 수행
+        System.out.println(intersection); //[4,5,6] 출력
+    }
+}
+
+```
+
+> 합집합 구하기
+
+```
+import java.util.Arrays;
+import java.util.HashSet;
+public class Main {
+    public static void main(String[] args) {
+        HashSet<Integer> s1=new HashSet<>(Arrays.asList(1,2,3,4,5,6));
+        HashSet<Integer> s2=new HashSet<>(Arrays.asList(4,5,6,7,8,9));
+        HashSet<Integer> union=new HashSet<>(s1);
+        union.addAll(s2); // 합집합 수행
+        System.out.println(union); //[1,2,3,4,5,6,7,8,9] 출력
+    }
+}
+```
+
+> 차집합 구하기
+
+```
+import java.util.Arrays;
+import java.util.HashSet;
+public class Main {
+    public static void main(String[] args) {
+        HashSet<Integer> s1=new HashSet<>(Arrays.asList(1,2,3,4,5,6));
+        HashSet<Integer> s2=new HashSet<>(Arrays.asList(4,5,6,7,8,9));
+        HashSet<Integer> substract=new HashSet<>(s1);
+        substract.removeAll(s2); //차집합 수행
+        System.out.println(substract); //[1,2,3] 출력
+    }
+}
+```
+
+> 집합 자료형 관련 메서드 : add(값 추가), addAll(값 여러개 추가), remove(특정 값 제거)
+
+**Tip** : TreeSet은 오름차순으로 값을 정렬하여 저장, LinkedHashSet은 입력한 순서대로 값을 정렬하여 저장
+
+
