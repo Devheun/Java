@@ -350,3 +350,75 @@ public class Sample {
     }
 }
 ```
+
+##  Day 5
+
+---
+자료형
+---
+
+#### 형변환
+
+> 문자열을 정수로 바꾸기
+
+```
+public class Sample{
+ public static void main(String[] args){
+  String num="123";
+  int n=Integer.parseInt(num); // Integer 클래스 사용
+  System.out.println(n); // 123 출력됨
+ }
+}
+```
+
+> 정수를 문자열로 바꾸기
+
+```
+public class Sample{
+ public static void main(String[] args){
+  int n=123;
+  
+  String num="" + n; // 정수 앞에 빈 문자열 더해주기
+  String num1= String.valueOf(n); 
+  String num2= Integer.toString(n);
+  
+  System.out.println(num); // 123 출력됨
+  System.out.println(num1); // 123 출력됨
+  System.out.println(num2); // 123 출력됨
+ }
+}
+```
+
+> 소숫점 포함된 문자열을 실수로 바꾸기
+
+```
+public class Sample{
+ public static void main(String[] args){
+  String num="123.456";
+  double d = Double.parseDouble(num); //Double.parseDouble 또는 Float.parseFloat 로 가능
+  System.out.println(d); // 123.456 출력됨
+ }
+}
+```
+
+> 정수와 실수 사이 형 변환
+
+```
+public class Sample{
+ public static void main(String[] args){
+  int n1=123;
+  double d1 = n1; // 정수를 실수로 바꿀땐 캐스팅 필요 X
+  System.out.println(d1); // 123.0 출력됨
+  
+  double d2=123.456;
+  int n2=(int)d2; // 실수를 정수로 바꿀 땐 반드시 정수형으로 캐스팅
+  System.out.println(n2); // 123 출력됨
+ }
+}
+```
+
+> 실수 형태의 문자열을 정수로 변경 : Double.parseDouble()로 실수로 바꾼 후에 정수로 변환해야함 !
+
+#### final : 값을 한번 설정하면 다시 설정 불가 !
+
+**Tip** : 리스트는 final로 선언 시 값을 더하거나 빼는 것은 가능, 재할당만 불가. 더하거나 빼는 것 불가능하게 하려면 List.of 사용
