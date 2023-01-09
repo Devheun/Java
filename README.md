@@ -422,3 +422,149 @@ public class Sample{
 #### final : 값을 한번 설정하면 다시 설정 불가 !
 
 **Tip** : 리스트는 final로 선언 시 값을 더하거나 빼는 것은 가능, 재할당만 불가. 더하거나 빼는 것 불가능하게 하려면 List.of 사용
+
+##  Day 6
+
+---
+제어문
+---
+
+#### if문
+
+> if문의 기본구조
+
+```
+if(조건문){
+ <수행할 문장1>;
+ <수행할 문장2>;
+}else{
+ <수행할 문장A>;
+ <수행핢 문장B>;
+}
+```
+
+> 비교연산자 : C언어와 동일
+
+> and, or, not 연산자 ( &&, ||, !)
+
+> contains : List 자료형에서 해당 아이템이 있는지 조사할 때 사용
+
+> else if
+
+#### switch/case 문
+
+기본 구조
+```
+switch(입력변수){
+ case 입력값1:...
+   break;
+ case 입력값2:...
+   break;
+ ...
+ default:...
+   break;
+}
+```
+
+**Tip** : switch 조건문에 들어갈 수 있는 입력변수 타입은 byte, short, char, int만 가능하다.
+
+#### while문
+
+기본 구조
+```
+while (조건문){
+ <수행할 문장1>;
+ <수행할 문장2>;
+ <수행할 문장3>;
+ ...
+}
+```
+
+> 무한 루프
+
+```
+while (true){
+ <수행할 문장1>;
+ <수행할 문장2>;
+ ...
+}
+```
+
+> while문 빠져 나가기 (break)
+
+ex)
+```
+public class practice2{
+    public static void main(String[] args){
+        int coffee=10;
+        int money=300;
+        while (money>=0){
+            System.out.println("돈을 받았으니 커피 줌");
+            coffee--;
+            System.out.println("남은 커피의 양은 " + coffee);
+            if (coffee==0){
+                System.out.println("커피가 다 떨어졌습니다. 판매중지");
+                break;
+            }
+        }
+    }
+}
+```
+
+> while문 조건문으로 돌아가기(continue)
+
+ex)
+
+```
+int a=0;
+        while (a<10){
+            a++;
+            if (a%2==0){
+                continue;
+            }
+            System.out.println(a);
+        }
+```
+
+#### for 문
+
+> for문의 구조
+
+```
+String[] numbers= {"one","two","three"};
+for(int i=0;i<numbers.length;i++){
+ System.out.println(numbers[i]);
+}
+```
+
+예시 : 5명의 학생이 시험 보았는데, 시험점수 60점 넘으면 합격, 아님 불합격인데 판단하여 출력
+
+```
+int[] marks={90,25,67,45,80};
+        for (int i=0;i<marks.length;i++){
+            if (marks[i]>=60){
+                System.out.println((i+1)+"번 학생은 합격입니다.");
+            }else{
+                System.out.println((i+1)+"번 학생은 불합격입니다.");
+            }
+        }
+```
+
+> continue가 for 문에서도 동일하게 적용됨
+
+> 이중 for문
+
+구구단 출력해보기
+
+```
+for (int i=2;i<=9;i++){
+           for (int j=1;j<=9;j++){
+               System.out.print(i*j+" ");
+           }
+           System.out.println("");
+       }
+```
+
+**Tip** : System.out.print는 줄바꿈문자(\n)을 포함하지 않고 출력함.
+
+
