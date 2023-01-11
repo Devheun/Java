@@ -568,3 +568,31 @@ for (int i=2;i<=9;i++){
 **Tip** : System.out.print는 줄바꿈문자(\n)을 포함하지 않고 출력함.
 
 
+## Day 7
+
+---
+제어문
+---
+
+> for each
+
+for (type var: iterate){
+  body-of-loop
+}
+
+
+iterate : 루프를 돌릴 객체
+itreate 객체에서 한 개씩 순차적으로 var에 대입됨
+( iterate로 사용할 수 있는 자료형은 루프를 돌릴 수 있는 자료형만 가능 ex) 배열 및 ArrayList 등)
+
+ex)
+
+```
+String[] numbers = {"one","two","three"};
+for(String number: numbers){
+  System.out.println(numer);
+}
+```
+
+**Tip** : 반복회수를 명시적으로 주는것이 불가능하고, 1스탭씩 순차적으로 반복할때만 사용가능
+
