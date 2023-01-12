@@ -633,7 +633,7 @@ for(String number: numbers){
 ```
 리턴자료형 메서드명(입력자료형1 매개변수1, 입력자료형2 매개변수2, ...){
   ...
-  return 리턴값; // 리턴자료형 void면 return
+  return 리턴값; // 리턴자료형 void면 return 필요 없음
 }
 ```
 
@@ -687,7 +687,7 @@ public class Sample{
     Sample sample = new Sample();
     sample.a=1;
     sample.varTest();
-    System.out.println(sample.a); // 2 
+    System.out.println(sample.a); // 2 출력됨
   }
 }
 ```
