@@ -628,7 +628,7 @@ for(String number: numbers){
 
 인수 : 메서드를 호출할 때 전달하는 입력값
 
-메서드의 구조
+**메서드의 구조**
 
 ```
 리턴자료형 메서드명(입력자료형1 매개변수1, 입력자료형2 매개변수2, ...){
@@ -636,5 +636,65 @@ for(String number: numbers){
   return 리턴값; // 리턴자료형 void면 return
 }
 ```
+
+**메서드 내에서 선언된 변수의 효력 범위**
+
+ex)
+```
+public class Sample {
+    void varTest(int a) {
+        a++;
+    }
+
+    public static void main(String[] args) {
+        int a = 1;
+        Sample sample = new Sample();
+        sample.varTest(a);
+        System.out.println(a); // 1 출력됨
+    }
+}
+```
+
+증가시키기 위해선
+
+```
+public class Sample {
+    int varTest(int a) {
+        a++;
+        return a;
+    }
+
+    public static void main(String[] args) {
+        int a = 1;
+        Sample sample = new Sample();
+        a = sample.varTest(a);
+        System.out.println(a); // 2 출력됨
+    }
+}
+```
+
+또는 
+
+```
+public class Sample{
+  int a;
+  
+  void varTest(){
+    this.a++;
+  }
+  
+  public static void main(String[] args){
+    Sample sample = new Sample();
+    sample.a=1;
+    sample.varTest();
+    System.out.println(sample.a); // 2 
+  }
+}
+```
+
+
+
+
+
 
 
