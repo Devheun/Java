@@ -692,7 +692,177 @@ public class Sample{
 }
 ```
 
+## Day 9
 
+---
+객체지향 프로그래밍
+---
+
+> Call by value
+
+값을 전달하는 경우
+
+```
+class Updater{
+  void update(int count){
+    count++;
+  }
+}
+
+class Counter{
+  int count=0;
+}
+
+class Main {
+  public static void main(String[] args){
+    Counter myCounter = new Counter();
+    System.out.println(myCounter.count); // 0 출력됨
+    Updater myUpdater = new Updater();
+    myUpdater.update(myCounter.count);
+    System.out.println(myCounter.count); // 0 출력됨
+  }
+}
+```
+
+객체를 전달하는 경우
+
+```
+class Updater{
+  void update(Counter counter){
+    counter.count++;
+  }
+}
+
+class Counter{
+  int count=0;
+}
+
+class Main {
+  public static void main(String[] args){
+    Counter myCounter = new Counter();
+    System.out.println(myCounter.count); // 0 출력됨
+    Updater myUpdater = new Updater();
+    myUpdater.update(myCounter);
+    System.out.println(myCounter.count); // 1 출력됨
+  }
+}
+
+```
+
+**메서드에 객체를 전달할 경우 메서드에서 객체의 객체변수 값을 변경할 수 있다**
+
+> 상속
+
+자식 클래스가 부모 클래스의 기능을 그대로 물려받을 수 있는 기능
+
+```
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  void sleep() {
+    System.out.println(this.name + " zzz");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    Dog dog = new Dog();
+    dog.setName("puppy");
+    System.out.println(dog.name);
+    dog.sleep();
+  }
+}
+
+```
+
+> IS-A 관계 : Animal dog = new Dog(); // Dog is a Animal, 개로 만든 객체는 동물 자료형이다.
+
+*주의해야할 점* : Dog 객체를 Animal 자료형으로 사용할 경우 Dog 클래스에 존재하는 메서드 사용불가. Animal 클래스에 구현된 메서드만 사용가능
+
+Dog dog = new Animal(); //이런 코드는 컴파일 에러뜸, 동물로 만든 객체는 개 자료형이다. <- 조금 이상함
+
+
+> 메서드 오버라이딩 : 메서드 덮어쓰기 개념으로 부모클래스의 메서드를 자식클래스가 동일한 형태로 또다시 구현하여 더 높은 우선순위를 갖게 되는것
+
+```
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  void sleep() {
+    System.out.println(this.name + " zzz");
+  }
+}
+
+class HouseDog extends Dog {
+  void sleep() {
+    System.out.println(this.name + " zzz in house");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    HouseDog houseDog = new HouseDog();
+    houseDog.setName("happy");
+    houseDog.sleep(); /// happy zzz in house 출력됨
+  }
+}
+
+```
+
+> 메서드 오버로딩 : 메서드의 입력항목이 다른 경우 동일한 이름의 메서드를 만들 수 있다.
+
+```
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  void sleep() {
+    System.out.println(this.name + " zzz");
+  }
+}
+
+class HouseDog extends Dog {
+  void sleep() {
+    System.out.println(this.name + " zzz in house");
+  }
+
+  void sleep(int hour) {
+    System.out.println(this.name + " zzz in house for " + hour + " hours");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    HouseDog houseDog = new HouseDog();
+    houseDog.setName("happy");
+    houseDog.sleep();
+    houseDog.sleep(5);
+  }
+}
+
+```
+
+> 다중 상속 : 자바는 **지원안함** !!!
 
 
 
