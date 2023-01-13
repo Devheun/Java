@@ -864,6 +864,126 @@ class Main {
 
 > 다중 상속 : 자바는 **지원안함** !!!
 
+> 생성자(Constructor)
+
+객체 변수에 값을 무조건 설정해야만 객체가 생성되도록 할 때 생성자를 이용하면 된다 !!
+
+객체 생성 방법이 생성자의 규칙과 맞아야지만 생성가능하다.
+
+**생성자의 규칙**
+
+1. 클래스명과 메서드명이 동일하다.
+2. 리턴타입을 정의하지 않는다.
+
+```
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  void sleep() {
+    System.out.println(this.name + " zzz");
+  }
+}
+
+class HouseDog extends Dog {
+  HouseDog(String name) { // 생성자 추가 !!
+    this.setName(name);
+  }
+
+  void sleep() {
+    System.out.println(this.name + " zzz in house");
+  }
+
+  void sleep(int hour) {
+    System.out.println(this.name + " zzz in house for " + hour + " hours");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    HouseDog dog = new HouseDog("happy");
+    System.out.println(dog.name);
+  }
+}
+
+```
+
+> 디폴트 생성자 : 생성자의 입력 항목이 없고 생성자 내부에 아무 내용이 없는 생성자
+
+클래스에 생성자가 하나도 없다면 컴파일러는 자동으로 디폴트 생성자 추가. 하지만 생성자가 하나라도 구현되어있으면 추가 X
+
+```
+class Dog extends Animal{
+  Dog(){
+  }
+  void sleep(){
+    System.out.println(this.name+" zzz");
+  }
+}
+```
+
+> 생성자 오버로딩: 메서드에 오버로딩 처럼 생성자에도 오버로딩 가능
+
+```
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  Dog() {
+
+  }
+
+  void sleep() {
+    System.out.println(this.name + " zzz");
+  }
+}
+
+class HouseDog extends Dog {
+
+  HouseDog(String name) { // 여기선 String 자료형을 입력으로 받는 생성자
+    this.setName(name);
+  }
+
+  HouseDog(int type) { // 여기선 int 자료형을 입력으로 받는 생성자
+    if (type == 1) {
+      this.setName("york");
+    } else if (type == 2) {
+      this.setName("bulldog");
+    }
+  }
+
+  void sleep() {
+    System.out.println(this.name + " zzz in house");
+  }
+
+  void sleep(int hour) {
+    System.out.println(this.name + " zzz in house for " + hour + " hours");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    HouseDog happy = new HouseDog("happy");
+    HouseDog york = new HouseDog(1);
+    System.out.println(happy.name);
+    System.out.println(york.name);
+  }
+}
+
+```
+
 
 
 
