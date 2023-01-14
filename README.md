@@ -985,6 +985,175 @@ class Main {
 ```
 
 
+## Day 10
+
+---
+객체지향 프로그래밍
+---
+
+
+> 인터페이스는 왜 필요한가? : 귀찮음을 극복하고자
+
+```
+
+interface Predator { // 육식동물 인터페이스
+
+}
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Tiger extends Animal implements Predator {
+
+}
+
+class Lion extends Animal implements Predator {
+
+}
+
+class ZooKeeper {
+  void feed(Predator predator){
+    System.out.println("feed apple");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    ZooKeeper zooKeeper = new ZooKeeper();
+
+    Tiger tiger = new Tiger();
+    Lion lion = new Lion();
+    zooKeeper.feed(tiger);
+    zooKeeper.feed(lion);
+  }
+}
+
+```
+
+
+상속에서 본 IS-A 관계가 인터페이스에서도 마찬가지로 적용됨.
+
+ex) tiger - Tiger 클래스의 객체, Predator 인터페이스의 객체
+
+    lion - Lion 클래스의 객체, Predator 인터페이스의 객체
+    
+    
+이런식으로 어떤 육식동물이 추가되더라도 ZooKeeper는 feed 메서드를 추가할 필요 없이 Predator 인터페이스를 구현한 클래스를 작성하기하면 하면 된다.
+
+```
+class Crocodile extends Animal implements Predator{}
+```
+
+
+위의 코드는 항상 feed apple 만을 출력하므로 인터페이스에 메서드를 추가 !!
+
+```
+interface Predator{
+	String getFood();
+}
+```
+
+인터페이스 메서드는 몸통이 없음 !
+
+getFood라는 메서드는 인터페이스를 implements한 클래스들이 구현해야 한다.
+
+**인터페이스의 메서드는 항상 public으로 구현해야함**
+
+```
+interface Predator { // 육식동물 인터페이스
+  String getFood();
+}
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Tiger extends Animal implements Predator {
+  public String getFood() {
+    return "apple";
+  }
+}
+
+class Lion extends Animal implements Predator {
+  public String getFood() {
+    return "banana";
+  }
+}
+
+class ZooKeeper {
+
+  void feed(Predator predator) {
+    System.out.println("feed " + predator.getFood());
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    ZooKeeper zooKeeper = new ZooKeeper();
+
+    Tiger tiger = new Tiger();
+    Lion lion = new Lion();
+    zooKeeper.feed(tiger);
+    zooKeeper.feed(lion);
+  }
+}
+```
+
+인터페이스를 구현함으로써 ZooKeeper 클래스가 동물들의 종류에 의존적인 클래스에서 동물들의 종류와 상관없는 독립적인 클래스가 되었다!
+
+물리적 세계 - 자바 세계
+
+컴퓨터 - ZooKeeper
+
+USB포트 - Predator
+
+하드디스크, 디지털카메라 - Tiger,Lion,…
+
+>  디폴트 메서드 : 인터페이스의 메서드는 몸통을 가질 수 없지만 디폴트 메서드를 사용하면 실제 구현된 형태의 메서드를 가질 수 있다.
+
+ex)
+
+```
+interface Predator{
+	String getFood();
+
+	default void printFood(){
+		System.out.printf(“my food is %s\n”, getFood());
+}
+}
+```
+
+디폴트 메서드는 메서드명 가장 앞에 “default”라고 표기해야함.
+
+디폴트 메서드는 오버라이딩이 가능하다.
+
+> 스태틱 메서드 : 인터페이스명.스태틱메서드명 형식으로 사용가능
+
+```
+interface Predator { // 육식동물 인터페이스
+  String getFood();
+  default void printFood()
+  {
+    System.out.printf("my food is %s\n", getFood());
+  }
+
+  int LEG_COUNT=4; //인터페이스 상수
+  static int speed(){
+    return LEG_COUNT * 30;
+  }
+}
+```
+
+Predator.speed();  // 이런식으로 사용가능
 
 
 
