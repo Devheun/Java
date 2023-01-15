@@ -1272,3 +1272,40 @@ Bouncer 클래스의 barkAnimal 메서드의 입력 자료형이 Barkable 이더
 
 왜냐? 상속을 받은 자식 인터페이스이기때문
 
+> 추상클래스 : 인터페이스 역할도 하면서 클래스의 기능도 가지고 있는 클래스
+
+
+```
+abstract class Predator extends Animal { 
+  abstract String getFood();
+  void printFood()
+  {
+    System.out.printf("my food is %s\n", getFood());
+  }
+
+  static int LEG_COUNT=4; // 추상 클래스의 상수는 static 선언이 필요
+  static int speed(){
+    return LEG_COUNT * 30;
+  }
+}
+```
+
+
+추상클래스를 만들기 위해선 class 앞에 abstract 표기.
+
+메서드에도 역시 abstract 표기 (getFood method)
+
+abstract 메서드도 인터페이스의 메서드처럼 몸통 X, 즉, abstract 클래스를 상속하는 클래스에서 해당 abstract 메서드를 구현해야만 함!!
+
+인터페이스의 디폴트 메서드 더 이상 사용할 수 없으므로 삭제하여 일반 메서드로 변경.
+
+추상 클래스는 명시적으로 상수에 static 이라고 적어주어야함
+
+**
+추상 클래스는 일반 클래스와 달리 단독으로 객체 생성할 수 없음. 반드시 추상 클래스를 상속한 실제 클래스를 통해서만 생성 가능!!**
+
+
+추상 클래스에는 abstract 메서드 외에 실제 메서드도 사용할 수 있다. 추상 클래스에 실제 메서드를 추가하면 Tiger, Lion 등으로 만들어진 객체에서 그 메서드들을 모두 사용할 수 있음 !!
+
+여기선 원래 인터페이스에서 default 메서드로 사용했던 printFood가 추상클래스의 실제 메서드에 해당됨.
+
