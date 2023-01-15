@@ -1156,4 +1156,119 @@ interface Predator { // 육식동물 인터페이스
 Predator.speed();  // 이런식으로 사용가능
 
 
+## Day 11
+
+---
+객체지향 프로그래밍
+---
+
+
+> 다형성
+
+```
+interface Predator { // 육식동물 인터페이스
+  String getFood();
+  default void printFood()
+  {
+    System.out.printf("my food is %s\n", getFood());
+  }
+
+  int LEG_COUNT=4; //인터페이스 상수
+  static int speed(){
+    return LEG_COUNT * 30;
+  }
+}
+
+interface Barkable{
+  void bark();
+}
+
+class Animal {
+  String name;
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
+
+class Tiger extends Animal implements Predator, Barkable {
+  public String getFood() {
+    return "apple";
+  }
+  public void bark(){
+    System.out.println("어흥");
+  }
+}
+
+class Lion extends Animal implements Predator,Barkable {
+  public String getFood() {
+    return "banana";
+  }
+  public void bark(){
+    System.out.println("으르렁");
+  }
+}
+
+class Bouncer{
+  void barkAnimal(Barkable animal){
+    animal.bark();
+  }
+}
+
+class ZooKeeper {
+
+  void feed(Predator predator) {
+    System.out.println("feed " + predator.getFood());
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    Tiger tiger = new Tiger();
+    Lion lion = new Lion();
+
+    Bouncer bouncer = new Bouncer();
+    bouncer.barkAnimal(tiger);
+    bouncer.barkAnimal(lion);
+  }
+}
+
+```
+
+위의 코드에서 보듯이 인터페이스는 콤마를 이용하여 여러개를 implements 할 수 있다.
+
+tiger, lion 객체는 각각 Tiger, Lion 클래스의 객체이면서 Animal 클래스의 객체이기도 하고 Barkable, Predator 인터페이스의 객체이기도 하다.
+
+이렇게 하나의 객체가 여러개의 자료형 타입을 가질 수 있는 것을 다향성(Polymorphism)이라고 한다.
+
+알아두어야 할 점은 Predator로 선언된 predator 객체와 Barkable로 선언된 barkable 객체는 사용할 수 있는 메서드가 서로 다르다!
+
+만약 getFood 메서드와 bark 메서드를 모두 사용하고 싶다면 ??
+
+Predator, Barkable 인터페이스를 구현한 Tiger 로 선언된 tiger 객체를 그대로 사용하거나, getFood, bark 메서드를 모두 포함하는 새로운 인터페이스를 새로 만들면 됨!
+
+ex)
+```
+interface BarkablePredator extends Predator, Barkable{}
+```
+
+인터페이스는 일반 클래스와 달리 extends를 이용하여 여러개의 인터페이스를 동시에 상속 가능! ( 다중 상속 지원, 일반 클래스는 단일상속만 가능)
+
+```
+class Lion extends Animal implements BarkablePredator{
+  public String getFood() {
+    return "banana";
+  }
+  public void bark(){
+    System.out.println("으르렁");
+  }
+}
+```
+
+
+결과는 동일하게 출력됨.
+
+Bouncer 클래스의 barkAnimal 메서드의 입력 자료형이 Barkable 이더라도 BarkablePredator를 구현한 lion 객체를 전달 할 수 있음.
+
+왜냐? 상속을 받은 자식 인터페이스이기때문
 
