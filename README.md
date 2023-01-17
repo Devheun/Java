@@ -1316,3 +1316,136 @@ abstract 메서드도 인터페이스의 메서드처럼 몸통 X, 즉, abstract
 ---
 
 연습문제 풀이 !
+
+## Day 13
+
+---
+입출력
+---
+
+> 콘솔 입출력
+
+**InputStream**
+
+```
+package project;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        InputStream in=System.in;
+        
+        int a;
+        a=in.read(); // 'a' 입력
+        
+        System.out.println(a); //97
+    }
+}
+```
+
+위의 코드에서 InputStream은 자바의 내장클래스, java.lang 패키지에 속하지 않은 클래스는 필요할 때 항상 import해주어야함
+
+System.in은 InputStream의 객체이다.
+
+InputStream의 read메서드는 1 byte의 사용자의 입력을 받아들인다. ( 1 byte의 데이터는 byte자료형이 아니라 int 자료형으로 저장됨, 아스키 코드 값으로 !!)
+
+위의 코드에서 "a"를 입력해도 97, "abc"를 입력해도 97이 나옴. Why? read메서드는 1 byte만 읽기 때문이다.
+
+3 byte 입력했을 때 3 byte 전부 읽고 싶다면 ?
+
+```
+package project;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        InputStream in=System.in;
+        byte[] a = new byte[3];
+        in.read(a); // "abc" 입력
+        
+        System.out.println(a[0]); //97
+        System.out.println(a[1]); //98
+        System.out.println(a[2]); //99
+    }
+}
+```
+
+**InputStreamReader** : 우리가 입력한 문자값을 그대로 출력하고싶을 때 !
+
+```
+package project;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        InputStream in=System.in;
+        InputStreamReader reader=new InputStreamReader(in);
+        char[] a = new char[3]; //byte 대신 char 배열 사용가능
+        reader.read(a); //"abc" 입력
+        
+        System.out.println(a); "abc" 출력
+    }
+}
+```
+
+InputStreamReader 객체를 생성할 때는 생성자의 입력으로 InputStream 객체가 필요함!
+
+ex) InputStreamReader reader = new InputStreamReader(in);
+
+**BufferedReader** : 고정된 길이 말고 가변적으로 !!
+
+```
+package project;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        InputStream in=System.in;
+        InputStreamReader reader=new InputStreamReader(in);
+        BufferedReader br= new BufferedReader(reader);
+        
+        String a = br.readLine(); // "Hello World" 입력
+        System.out.println(a); // "Hello World"
+    }
+}
+```
+
+BufferedReader는 객체 생성 시 생성자의 입력으로 InputStreamReader의 객체가 필요함!
+
+**Scanner** : J2SE 5.0부터 클래스 추가됨. 보다 콘솔 입력 쉽게
+
+```
+package project;
+import java.util.Scanner;
+
+public class Inout{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println(sc.next());
+    }
+}
+```
+
+Scanner 클래스는 생성자의 입력으로 System.in, 즉 콘솔입력인 InputStream 필요 !
+
+sc.next()는 단어 하나, sc.nextLine()은 라인 한 줄, sc.nextInt()는 정수 하나 읽음
+
+**콘솔 출력**
+
+이때까지 써 온 System.out.println 메서드에서 System.out은 PrintStream 클래스의 객체이다.
+
+(System.err 는 System.out과 동일한 역할을 하지만 오류메시지를 출력할 경우 사용된다!)
+
+
+
+
+
+
+
