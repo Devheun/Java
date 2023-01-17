@@ -1435,7 +1435,7 @@ public class Inout{
 
 Scanner 클래스는 생성자의 입력으로 System.in, 즉 콘솔입력인 InputStream 필요 !
 
-sc.next()는 단어 하나, sc.nextLine()은 라인 한 줄, sc.nextInt()는 정수 하나 읽음
+sc.next()는 단어 하나, sc.nextLine()은 라인 한 줄, sc.nextInt()는 정수 하나 읽음.
 
 **콘솔 출력**
 
