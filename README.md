@@ -1,5 +1,5 @@
 # Java
-To practice Java (Beginner)
+To practice Java (Beginner) (With Jump to Java)
 
 
 ##  Day 1
