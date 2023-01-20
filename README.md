@@ -1444,8 +1444,148 @@ sc.next()는 단어 하나, sc.nextLine()은 라인 한 줄, sc.nextInt()는 정
 (System.err 는 System.out과 동일한 역할을 하지만 오류메시지를 출력할 경우 사용된다!)
 
 
+## Day 14
 
+---
+입출력
+---
 
+> 파일 입출력
 
+**파일 쓰기**
 
+```
+package project;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        FileOutputStream output=new FileOutputStream("c:/out.txt");
+        output.close();
+    }
+}
+```
+
+위 예제는 c:/ 디렉토리 바로 밑에 새로운 파일 하나 생성됨, FileOutStream 객체를 생성하기 위해선 생성자의 입력으로 파일명 넘겨주어야함.
+
+output.close()는 사용한 파일 객체를 닫아주는 코드. 사실 생략해도 되지만 손수 닫아주는게 좋다.
+
+**FileOutputStream**
+
+```
+package project;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        FileOutputStream output=new FileOutputStream("c:/out.txt");
+	for(int i=1;i<11;i++){
+	  String data= i + " 번째 줄입니다.\r\n";
+	  output.write(data.getBytes());
+	}
+        output.close();
+    }
+}
+```
+
+InputStream과 마찬가지로 OutputStream도 바이트 단위로 데이터를 처리하는 클래스.
+
+FileOutputStream에 값을 쓸 때는 byte배열로 써야 하므로 String을 byte배열로 바꾸어주는 getBytes() 메서드 이용!
+
+(\r\n은 줄바꿈 문자)
+
+**FileWriter**
+
+```
+package project;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        FileWriter fw = new FileWriter("c:/out.txt");
+	for(int i=1;i<11;i++){
+	  String data= i + " 번째 줄입니다.\r\n";
+	  fw.write(data);
+	}
+        fw.close();
+    }
+}
+```
+
+FileWriter는 byte 배열 대신 문자열을 사용할 수 있어 편리함.
+
+**PrintWriter**
+
+```
+package project;
+import java.io.PrintWriter;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        PrintWriter pw = new PrintWriter("c:/out.txt");
+	for(int i=1;i<11;i++){
+	  String data= i + " 번째 줄입니다.";
+	  pw.println(data);
+	}
+        pw.close();
+    }
+}
+```
+
+**파일에 내용 추가하기**
+
+```
+FileWriter fw2 = new FileWriter("c:/out.txt",true); // 두번째 파라미터는 추가모드로 열것인지에 대한 boolean 값
+```
+
+만약 FileWriter 대신 PrintWriter를 이용하고 싶으면
+
+```
+PrintWriter pw2 = new PrintWriter(new FileWriter("c:/out.txt",true)); // PrintWriter 사용할 경우 추가모드로 열FileWriter의 객체를 전달해야 함
+```
+
+**파일 읽기**
+
+```
+package project;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+        byte[] b = new byte[1024];
+	FileInputStream input = new FileInputStream("c:/out.txt");
+	input.read(b);
+	System.out.println(new String(b)); // byte 배열을 문자열로 변경하여 출력
+	input.close();
+    }
+}
+```
+
+byte 배열을 이용하여 파일 읽어야하기 때문에 정확한 길이 모를 경우 불편 (여기선 1024바이트 읽도록)
+
+더 좋은 방법은 ??
+
+```
+package project;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Inout{
+    public static void main(String[] args) throws IOException{
+       BufferedReader br = new BufferedReader(new FileReader("c:/out.txt"));
+       while(true){
+         String line = br.readLine(); // 더이상 읽을 라인이 없을 경우 null 
+	 if (line==null) break;
+	 System.out.println(line);
+       }
+       br.close();
+    }
+}
+```
 
