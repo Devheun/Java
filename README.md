@@ -62,7 +62,7 @@ Desk chair;
  
  > charAt : 문자열에서 특정 위치의 문자 리턴 ex: a.charAt(6)
  
- > replaceAll : 문자열 중 특정 문자열을 다른 문자열로 바꿀 때 ex: a.replace("Java","World")
+ > replaceAll : 문자열 중 특정 문자열을 다른 문자열로 바꿀 때 ex: a.replaceAll("Java","World")
  
  > substring: 문자열 중 특정 부분 뽑아낼 경우 ex : a.substring(0,4)
  
