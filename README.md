@@ -1611,3 +1611,84 @@ public class Inout{
 패키지를 다른 클래스에서 사용하려면 import를 해야 한다 ! (같은 패키지 내에서는 import 없이 사용 가능하다)
 
 *왜 패키지를 사용할까?* : 비슷한 성격의 클래스들을 묶을 수 있어 클래스 분류가 용이하고, 다른 사람이 작성한 클래스나 라이브러리를 쓸 때 클래스 명이 겹치는 경우가 많이 발생하는데, 패키지명이 다르면 충돌 X
+
+---
+접근 제어자 (Access Modifier)
+---
+
+**접근 제어자** : 변수나 메서드의 사용 권한은 다음과 같은 접근 제어자를 사용하여 설정 가능
+
+(밑으로 갈수록 보다 많은 접근을 허용한다)
+1. private
+2. default
+3. protected
+4. public
+
+**private** : private이 붙은 변수, 메서드는 해당 클래스에서만 접근이 가능하다.
+
+ex) secret 변수와 getSecret 메서드는 오직 Sample 클래스에서만 접근이 가능하다.
+
+```
+public class Sample{
+  private String secret;
+  private String getSecret(){
+    return this.secret;
+  }
+}
+```
+
+**default** : 접근 제어자를 별도로 설정하지 않는다면 default로 설정됨, 해당 패키지 내에서만 접근이 가능
+
+ex) house/HouseKim.java
+
+```
+package house;
+
+public class HouseKim{
+  String lastname = "kim"; // default 접근 제어자로 생성됨
+}
+```
+
+ex) house/HousePark.java
+
+```
+package house;
+
+public class HousePark{
+  String lastname = "park";
+  
+  public static void main(String[] args){
+    HouseKim kim = new HouseKim();
+    System.out.println(kim.lastname); // kim 출력됨
+  }
+}
+```
+
+**protected** : protected가 붙은 변수, 메서드는 동일 패키지의 클래스 또는 해당 클래스를 상속받은 다른 패키지의 클래스에서만 접근 가능
+
+ex) house/HousePark.java
+
+```
+package house; // 패키지 서로 다르다.
+
+public class HousePar{
+  protected String lastname = "park";
+}
+```
+
+ex) house/person/SiHeunLee.java
+
+```
+package house.person; // 패키지 서로 다르다.
+
+import house.HousePark;
+
+public class SiHeunLee extends HousePark{
+  public static void main(String[] args){
+    SiHeunLee shl = new SiHeunLee();
+    System.out.println(shl.lastname); // park 출력됨. 상속한 클래스의 protected 변수는 접근 가능
+  }
+}
+```
+
+**public** : 어떤 클래스에서라도 접근이 가능하다.
