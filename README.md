@@ -1692,3 +1692,114 @@ public class SiHeunLee extends HousePark{
 ```
 
 **public** : 어떤 클래스에서라도 접근이 가능하다.
+
+##  Day 17
+---
+스태틱 ( static )
+---
+
+**static 변수**
+
+항상 값이 변하지 않는 경우 static 사용 시 메모리의 이점 얻을 수 있다. ( 메모리 할당을 딱 한번만 하게 되어 메모리 사용에 이점)
+
+ex)
+
+```
+class HouseLee{
+  static String lastname= "ㅇㅣ";
+}
+
+public class Sample{
+  public static void main(String[] args){
+    HouseLee lee1 = new HouseLee();
+    HouseLee lee2 = new HouseLee();
+  }
+}
+```
+
+또한 공유개념을 내포한다.
+
+ex)웹 사이트 방문시마다 조회수를 증가시키는 Counter 클래스
+
+```
+class Counter{
+  static int count=0;
+  Counter(){
+    count++; // count는 객체변수가 아니므로 this 제거
+    System.out.println(count);
+  }
+}
+
+public class Sample{
+  public static void main(String[] args){
+    Counter c1 = new Counter();
+    Counter c2 = new Counter();
+  }
+}
+```
+
+보통 변수의 static 키워드는 메모리의 효율보다는 공유의 목적으로 훨씬 더 많이 사용됨.
+
+**static method**
+
+ex)
+
+```
+class Counter{
+  static int count=0;
+  Counter(){
+    count++; // count는 객체변수가 아니므로 this 제거
+    System.out.println(count);
+  }
+  
+  public static int getCount(){
+    return count;
+  }
+}
+
+public class Sample{
+  public static void main(String[] args){
+    Counter c1 = new Counter();
+    Counter c2 = new Counter();
+    System.out.println(Counter.getCount());
+  }
+}
+```
+
+
+메서드 앞에 static 키워드를 붙이면 객체 생성없이 클래스를 통해 메서드를 직접 호출 가능 (ex : Counter.getCount())
+
+*Tip*: 스태틱 메서드 안에서는 객체변수 접근이 불가능. 위의 예는 count 변수가 static 변수이기때문에 접근 가능
+
+
+**singleton pattern** : 단 하나의 객체만을 생성하게 강제하는 디자인 패턴
+
+ex)
+
+```
+class Singleton {
+    private static Singleton one;
+    private Singleton() {
+    }
+
+    public static Singleton getInstance() {
+        if(one==null) {
+            one = new Singleton();
+        }
+        return one;
+    }
+}
+
+public class Sample {
+    public static void main(String[] args) {
+        Singleton singleton1 = Singleton.getInstance();
+        Singleton singleton2 = Singleton.getInstance();
+        System.out.println(singleton1 == singleton2);  // true 출력
+    }
+}
+```
+
+
+
+
+
