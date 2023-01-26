@@ -1706,7 +1706,7 @@ ex)
 
 ```
 class HouseLee{
-  static String lastname= "ㅇㅣ";
+  static String lastname= "이";
 }
 
 public class Sample{
@@ -1799,7 +1799,218 @@ public class Sample {
 }
 ```
 
+##  Day 18
+---
+예외처리 ( Exception )
+---
 
+**try, catch문의 기본 구조**
 
+```
+try{
+  ...
+}catch(예외1){
+  ...
+}catch(예외2){
+  ...
+}
+```
 
+try 문 안의 수행할 문장들에서 예외가 발생하지 않는다면 catch문에 속한 문장들 수행 X, try문안의 문장을 수행하는 도중에 예외가 발생하면 예외에 해당되는 catch문 수행된다.
 
+**finally** : 어떤 예외가 발생하더라도 반드시 실행되어야 하는 부분이 있을 때
+
+**RuntimeException 과 Exception**
+
+*RuntimeException*
+
+```
+package project;
+
+class FoolException extends RuntimeException{
+}
+
+public class Excep{
+    
+    public void sayNick(String nick){
+        if("fool".equals(nick)){
+            throw new FoolException(); 
+        }
+        System.out.println("당신의 별명은 " + nick + "입니다.");
+    }
+    
+    public static void main(String[] args){
+        Excep ex = new Excep();
+        ex.sayNick("fool");
+        ex.sayNick("genious");
+    }
+}
+```
+
+위의 코드 실행시
+
+```
+Exception in thread "main" project.FoolException
+        at project.Excep.sayNick(Excep.java:11)
+        at project.Excep.main(Excep.java:18)
+```
+
+와 같은 예외 처리 발생
+
+RuntimeException 과 Exception의 차이 : RuntimeException은 실행시 발생하는 예외이고 Exception은 컴파일 시 발생하는 예외이다.
+
+즉, Exception(Checked Exception)은 프로그램 작성 시 이미 예측가능한 예외를 작성할 때 사용하고 RuntimeException(Unchecked Exception)은 발생할수도 발생 안할수도 있는 경우에 작성한다.
+
+*Exception*
+
+```
+class FoolException extends Exception{
+}
+```
+
+위의 코드를 이런식으로 변경하면 컴파일 오류 발생! 예측가능한 Checked Exception 이기 때문에 예외처리를 컴파일러가 강제하기 때문.
+
+올바른 코드
+
+```
+package project;
+
+class FoolException extends Exception{
+}
+
+public class Excep{
+    
+    public void sayNick(String nick){
+        try{
+            if("fool".equals(nick)){
+                throw new FoolException();
+            }
+            System.out.println("당신의 별명은 " + nick + "입니다.");
+        }catch(FoolException e){
+            System.err.println("FoolException이 발생했습니다.");
+        }
+    }
+    
+    public static void main(String[] args){
+        Excep ex = new Excep();
+        ex.sayNick("fool");
+        ex.sayNick("genious");
+    }
+}
+```
+
+컴파일 오류를 막기위해서 sayNick 메서드에서 try..catch 문으로 FoolException을 처리해야한다 !!
+
+**예외 던지기 (throws)**
+
+위의 코드에서는 sayNick 메서드에서 FoolException을 발생시키고 예외처리도 sayNick 메서드에서 했는데, 이런 방법 말고 sayNick을 호출한 곳에서 FoolException을 처리하도록 예외를 위로 던질 수 있는 방법이 있다.
+
+```
+package project;
+
+public class Excep{
+    
+    public void sayNick(String nick) throws FoolException{
+        if("fool".equals(nick)){
+            throw new FoolException();
+        }
+        System.out.println("당신의 별명은 " + nick + "입니다.");
+    }
+    
+    public static void main(String[] args){
+        Excep ex = new Excep();
+        ex.sayNick("fool");
+        ex.sayNick("genious");
+    }
+}
+```
+
+sayNick 메서드 뒷부분에 throws 라는 구문을 이용하여 FoolException을 위로 보낼 수 있다.("예외 뒤로 미루기")
+
+위의 코드처럼 작성하면 main 메서드에서 컴파일 에러가 발생하는데, throws 구문 때문에 FoolException의 예외를 처리해야하는 대상이 sayNick메서드에서 main메서드(sayNick 메서드를 호출하는 메서드)로 변경되었기 때문이다.
+
+그렇기에 컴파일 오류를 해결하려면 아래와 같이 코드 작성 해야한다.
+
+```
+package project;
+
+class FoolException extends Exception{
+    
+}
+
+public class Excep{
+    
+    public void sayNick(String nick) throws FoolException{
+        if("fool".equals(nick)){
+            throw new FoolException();
+        }
+        System.out.println("당신의 별명은 " + nick + "입니다.");
+    }
+    
+    public static void main(String[] args){
+        Excep ex = new Excep();
+        try{
+	    ex.sayNick("fool");
+            ex.sayNick("genious");
+        }catch(FoolException e){
+            System.err.println("FoolException이 발생했습니다.");
+        }
+    }
+}
+```
+
+sayNick 메서드에서 예외처리를 하면 문장 두개가 다 실행되지만, main 메서드에서 예외처리를 하면 ex.sayNick("genious") 수행 X
+
+이러한 이유로 Exception 처리하는 위치는 아주 중요하다!
+
+**트랜잭션 (Transaction)** - 점투자 쇼핑몰 예시 참조!!
+
+포장, 영수증 발행, 발송 세 단계로 이루어진다고 했을 때
+
+```
+상품발송(){
+ 포장();
+ 영수증발행();
+ 발송();
+}
+
+포장(){
+ ...
+}
+
+영수증발행(){
+ ...
+}
+
+발송(){
+ ...
+}
+```
+
+이런 식의 수도코드일 때 운영자는 포장, 영수증발행, 발송이라는 세가지 중 1가지라도 실패하면 모두 취소하고 싶어할 때 어떻게 작성해야할까?
+
+```
+상품발송(){
+ try{
+  포장();
+  영수증발행();
+  발송();
+ }catch(예외){
+  모두취소(); //하나라도 실패하면 모두 취소
+ }
+}
+
+포장() throws 예외 {
+   ...
+}
+
+영수증발행() throws 예외 {
+   ...
+}
+
+발송() throws 예외 {
+   ...
+}
+```
+
+이렇게 작성해야지 포장, 영수증발행, 발송 메서드 각각에서 예외처리를 하면 포장은 안됐는데 발송되는 등의 여러 문제들이 발생할 수 있다.
