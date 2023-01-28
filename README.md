@@ -2014,3 +2014,143 @@ sayNick 메서드에서 예외처리를 하면 문장 두개가 다 실행되지
 ```
 
 이렇게 작성해야지 포장, 영수증발행, 발송 메서드 각각에서 예외처리를 하면 포장은 안됐는데 발송되는 등의 여러 문제들이 발생할 수 있다.
+
+##  Day 19
+---
+쓰레드 (Thread)
+---
+
+**Thread**
+
+```
+public class Sample extends Thread {
+    public void run() {  // Thread 를 상속하면 run 메서드를 구현해야한다 !!
+        System.out.println("thread run.");
+    }
+
+    public static void main(String[] args) {
+        Sample sample = new Sample();
+        sample.start();  // start()로 쓰레드를 실행
+    }
+}
+```
+
+위의 예시는 쓰레드가 하나이므로 어떻게 동작하는지 알기 어려움.
+
+아래의 예시를 보자.
+
+```
+public class Sample extends Thread {
+    int seq;
+
+    public Sample(int seq) {
+        this.seq = seq;
+    }
+
+    public void run() {
+        System.out.println(this.seq + " thread start.");  // 쓰레드 시작
+        try {
+            Thread.sleep(1000);  // 1초 대기
+        } catch (Exception e) {
+        }
+        System.out.println(this.seq + " thread end.");  // 쓰레드 종료 
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {  // 총 10개의 쓰레드를 생성
+            Thread t = new Sample(i); // 어떤 쓰레드인지 확인하기위해 생성자에 순번 부여
+            t.start();
+        }
+        System.out.println("main end.");  // main 메서드 종료
+    }
+}
+```
+
+결과를 보면 0~9번 쓰레드가 순서대로 실행되지 않고 순서가 일정치 않다 -> 쓰레드는 순서에 상관없이 동시에 실행된다 !
+
+main메서드가 쓰레드가 종료되기전에 종료되었는데 모든 쓰레드가 종료된 후에 main 메서드를 종료시키고 싶으면 ??
+
+**Join** : 쓰레드가 종료될때까지 기다리게 하는 메서드
+
+```
+import java.util.ArrayList;
+
+public class Sample extends Thread {
+    int seq;
+    public Sample(int seq) {
+        this.seq = seq;
+    }
+
+    public void run() {
+        System.out.println(this.seq+" thread start.");
+        try {
+            Thread.sleep(1000);
+        }catch(Exception e) {
+        }
+        System.out.println(this.seq+" thread end.");
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Thread> threads = new ArrayList<>();
+        for(int i=0; i<10; i++) {
+            Thread t = new Sample(i);
+            t.start();
+            threads.add(t);
+        }
+
+        for(int i=0; i<threads.size(); i++) {
+            Thread t = threads.get(i);
+            try {
+                t.join(); // t 쓰레드가 종료할 때까지 기다림.
+            }catch(Exception e) {
+            }
+        }
+        System.out.println("main end.");
+    }
+}
+```
+
+이렇게 코드 작성하면 "main end" 문자열이 마지막에 출력되는 것을 확인할 수 있다.
+
+**Runnable**
+
+보통 쓰레드 객체를 만들 때 위의 예처럼 Thread 클래스를 상속하여 만들기도 하지만, 대부분은 Runnable 인터페이스를 구현하도록 하는 방법을 주로 사용 !! Why? Thread 클래스를 상속하면 다른 클래스를 상속할 수 없기때문.
+
+```
+import java.util.ArrayList;
+
+public class Sample implements Runnable { // 바뀐 부분
+    int seq;
+    public Sample(int seq) {
+        this.seq = seq;
+    }
+
+    public void run() {
+        System.out.println(this.seq+" thread start.");
+        try {
+            Thread.sleep(1000);
+        }catch(Exception e) {
+        }
+        System.out.println(this.seq+" thread end.");
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Thread> threads = new ArrayList<>();
+        for(int i=0; i<10; i++) {
+            Thread t = new Thread(new Sample(i)); // 바뀐 부분 : Thread의 생성자로 Runnable 인터페이스를 구현한 객체를 넘길 수 있음 !
+            t.start();
+            threads.add(t);
+        }
+
+        for(int i=0; i<threads.size(); i++) {
+            Thread t = threads.get(i);
+            try {
+                t.join();
+            }catch(Exception e) {
+            }
+        }
+        System.out.println("main end.");
+    }
+}
+```
+
