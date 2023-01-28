@@ -2154,3 +2154,101 @@ public class Sample implements Runnable { // 바뀐 부분
 }
 ```
 
+---
+Lambda
+---
+
+```
+interface Calculator {
+    int sum(int a, int b);
+}
+
+class MyCalculator implements Calculator {
+    public int sum(int a, int b) {
+        return a+b;
+    }
+}
+
+public class Sample {
+    public static void main(String[] args) {
+        MyCalculator mc = new MyCalculator();
+        int result = mc.sum(3, 4);
+        System.out.println(result);  // 7 출력
+    }
+}
+```
+
+위의 코드를 람다를 적용하여 바꾸면
+
+```
+interface Calculator{
+  int sum(int a, int b);
+}
+
+public class Sample{
+  public static void main(String[] args){
+    Calculator mc = (int a, int b) -> a+b;
+    int result = mc.sum(3,4);
+    System.out.println(result);
+  }
+}
+```
+
+인터페이스 사용시 주의할 점은 인터페이스의 메서드가 1개 이상이면 람다함수를 사용할 수 없다 !!
+
+인터페이스 사용시 주의할 점은 인터페이스의 메서드가 1개 이상이면 람다함수를 사용할 수 없다 !!
+
+그래서 람다 함수로 사용할 인터페이스는 @FunctionalInterface 어노테이션을 사용! ( @FunctionalInterface 사용하면 2개 이상의 메서드를 가진 인터페이스 작성 불가능 )
+
+```
+@FunctioanlInterface
+interface Calculator{
+  int sum(int a, int b);
+}
+```
+
+**람다 축약**
+
+(int a , int b) -> a+b 를 (a,b) -> a+b로 축약이 가능하다
+
+인터페이스에 이미 입출력에 대한 타입이 정의되어 있으므로 !!
+
+**람다 함수 인터페이스**
+
+BiFunction 인터페이스를 사용하면 Calculator 인터페이스를 대신해서 작성할 수 있다.
+
+```
+import java.util.function.BiFunction;
+
+public class Sample {
+    public static void main(String[] args) {
+        BiFunction<Integer, Integer, Integer> mc = (a, b) -> a + b;
+        int result = mc.apply(3, 4);  // sum이 아닌 apply 메서드를 사용해야 한다.
+        System.out.println(result);  // 7 출력
+    }
+}
+```
+
+BiFunction의 <Integer,Integer,Integer> 제네릭스는 입력항목 2개, 출력항목 1개를 의미함
+
+
+입출력 항목의 타입이 모두 Integer로 동일하기 때문에, 이렇게 입출력 항목이 모두 동일한 경우에 BinaryOperator를 사용하여 더 간단하게 가능 !!
+
+```
+import java.util.function.BinaryOperator;
+
+public class Sample {
+    public static void main(String[] args) {
+        BinaryOperator<Integer> mc = (a, b) -> a + b;
+        int result = mc.apply(3, 4);
+        System.out.println(result);  // 7 출력
+    }
+}
+```
+
+**Stream** : 스트림 방식을 사용하면 일반적인 코드보다 간결하고 가독성이 좋다! 
+
+
+
+
+
